@@ -1,0 +1,63 @@
+<script src="https://www.paypal.com/sdk/js?client-id=AYGZ8vj1ySNxl0WNCaMdgSLarf_xwVVuTMugWKf22pd6Xnz-mRtdI5K6QuNt7bQ28d9-dYxklA081VBD&currency=USD"></script>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr><th>Carrito</th></tr>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody >
+            {% if request.session.carrito.items %}
+            {% for key,value in request.session.carrito.items %}
+            <tr>
+                <td>{{value.nombre}}</td>
+                <td>{{value.precio}}</td>
+                <td>{{value.cantidad}}</td>
+                <td>{{value.subtotal}}</td>
+                <td><a href="{% url 'Agregar' key %}" class="btn badge btn-dark">+</a></td>
+                <td><a href="{% url 'Sacar' key %}" class="btn badge btn-dark">-</a></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr><td colspan="4"><p>No hay Productos Seleccionados</p></td></tr>
+            {% endif %}
+            
+          
+            <tr>
+                <td colspan="2">Total a pagar:</td>
+                <td>€</td> 
+                <td>{{ total_carrito }}</td> 
+            </tr>
+            <tr>
+                <td colspan="2"><a href="" class="btn btn-dark">Pagar</a></td>
+                <td><div id="paypal-button-container"></div></td> 
+                <td><a href="{% url 'Limpiar' %}" class="btn btn-dark">Limpiar</a></td>
+            </tr>
+            
+            
+            <script>
+                
+                paypal.Buttons({
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: '{{ total_carrito }}'
+                                }
+                            }]
+                        });
+                    },
+
+                }).render('#paypal-button-container');
+            </script>
+        
+    </table>
+
+</body>  
+        
+</div>
