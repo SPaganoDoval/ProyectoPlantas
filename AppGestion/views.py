@@ -27,10 +27,12 @@ def insertarProducto(request):
     var_nombre=request.POST['nombre']
     var_imagen1=request.POST['imagen1']
     var_precio=request.POST['precio']
+    var_detalle=request.POST['detalle']
     producto=Producto.objects.create(id=var_id,
                                      nombre=var_nombre,
                                      imagen1=var_imagen1,
-                                     precio=var_precio)
+                                     precio=var_precio,
+                                     detalle=var_detalle)
     return redirect('verProducto')
 
 '''def editarProducto(request,prod_no):
