@@ -51,6 +51,7 @@ def editarProducto(request, prod_no):
         producto.nombre = request.POST['nombre']
         producto.imagen1 = request.POST['imagen1']
         producto.precio = request.POST['precio']
+        producto.detalle = request.POST['detalle']
         producto.save()
    
         return redirect('verProducto')
